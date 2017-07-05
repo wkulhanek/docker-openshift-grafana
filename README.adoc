@@ -1,0 +1,24 @@
+# Grafana Docker Image for use with Red Hat OpenShift
+
+This repository builds a docker image for use with Red Hat OpenShift taking into account security considerations for running on OpenShift - e.g. not running under the `root` user.
+
+To build:
+
+[source,bash]
+----
+docker build . -t wkulhanek/grafana:latest
+docker push wkulhanek/grafana:latest
+----
+
+The repository includes an OpenShift Template to run Grafana with persistent storage.
+
+Do deploy:
+
+[source,bash]
+----
+oc new-project grafana --display-name="Grafana Dashboards"
+oc create -f grafana.yaml
+oc new-app grafana -p NAMESPACE=grafana
+----
+
+Then all you need to do is configure the Data Source to a Prometheus container and import a Dashboard (e.g. from https://github.com/debianmaster/openshift-examples/blob/master/promethus/grafana-dashboard.json)
