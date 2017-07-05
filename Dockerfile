@@ -11,6 +11,7 @@ LABEL name="Grafana" \
       version=$GRAFANA_VERSION \
       release="1"
 
+# User grafana gets added by RPM
 ENV USERNAME=grafana
 
 RUN yum -y update && yum -y upgrade && \
@@ -20,9 +21,6 @@ RUN yum -y update && yum -y upgrade && \
     yum -y localinstall /tmp/grafana.rpm && \
     yum -y clean all && \
     rm /tmp/grafana.rpm
-
-# User Grafana gets added by RPM
-#     adduser grafana
 
 COPY ./root /
 RUN /usr/bin/fix-permissions /var/lib/grafana && \
