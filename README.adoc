@@ -18,7 +18,7 @@ The repository includes an OpenShift Template to run Grafana with persistent sto
 ----
 oc new-project grafana --display-name="Monitoring - Grafana Dashboards"
 oc create -f grafana.yaml
-oc new-app grafana -p NAMESPACE=grafana
+oc new-app grafana -p NAMESPACE=grafana -p VOLUME_CAPACITY=4Gi
 ----
 
 . Configure a Grafana Data Source
