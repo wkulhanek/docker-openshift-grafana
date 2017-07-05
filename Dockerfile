@@ -25,12 +25,11 @@ RUN yum -y update && yum -y upgrade && \
 #     adduser grafana
 
 COPY ./root /
-RUN mkdir /var/lib/grafana && \
-    mkdir /var/log/grafana && \
-    mkdir /etc/grafana && \
-    /usr/bin/fix-permissions /var/lib/grafana && \
+RUN /usr/bin/fix-permissions /var/lib/grafana && \
     /usr/bin/fix-permissions /var/log/grafana && \
-    /usr/bin/fix-permissions /etc/grafana
+    /usr/bin/fix-permissions /etc/grafana && \
+    /usr/bin/fix-permissions /usr/share/grafana && \
+    /usr/bin/fix-permissions /usr/sbin/grafana-server
 
 VOLUME ["/var/lib/grafana", "/var/log/grafana", "/etc/grafana"]
 

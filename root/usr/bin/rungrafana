@@ -1,38 +1,39 @@
-#!/bin/bash -e
+#!/bin/bash
 
-: "${GF_PATHS_DATA:=/var/lib/grafana}"
-: "${GF_PATHS_LOGS:=/var/log/grafana}"
-: "${GF_PATHS_PLUGINS:=/var/lib/grafana/plugins}"
+export GF_PATHS_DATA=/var/lib/grafana
+export GF_PATHS_LOGS=/var/log/grafana
+export GF_PATHS_PLUGINS=/var/lib/grafana/plugins
 
 # Determine UID and GID under which the container is running
 export USER_ID=$(id -u)
 export GROUP_ID=$(id -g)
+export HOME=/usr/share/grafana
 
 # Make a copy of /etc/passwd in $HOME/passwd excluding
 # the `grafana` user.
+# grafana:x:998:996:grafana user:/usr/share/grafana:/sbin/nologin
 grep -v ^grafana /etc/passwd > "${HOME}/passwd"
 
 # Add the grafana user to the $HOME/passwd file with the current
 # UID and GID
-echo "grafana:x:${USER_ID}:${GROUP_ID}:grafana user:${HOME}:/bin/bash" >> "${HOME}/passwd"
-cat ${HOME}/passwd
+echo "grafana:x:${USER_ID}:${GROUP_ID}:grafana user:${HOME}:/sbin/nologin" >> "${HOME}/passwd"
 
 # Point CentOS to this new passwd file instead of the system
-# passwd file to make sure the gogs user is correctly assigned
+# passwd file to make sure the grafana user is correctly assigned
 export LD_PRELOAD=libnss_wrapper.so
 export NSS_WRAPPER_PASSWD=${HOME}/passwd
 export NSS_WRAPPER_GROUP=/etc/group
 
-if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then
-  OLDIFS=$IFS
-  IFS=','
-  for plugin in ${GF_INSTALL_PLUGINS}; do
-    IFS=$OLDIFS
-    grafana-cli  --pluginsDir "${GF_PATHS_PLUGINS}" plugins install ${plugin}
-  done
-fi
+# if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then
+#   OLDIFS=$IFS
+#   IFS=','
+#   for plugin in ${GF_INSTALL_PLUGINS}; do
+#     IFS=$OLDIFS
+#     grafana-cli  --pluginsDir "${GF_PATHS_PLUGINS}" plugins install ${plugin}
+#   done
+# fi
 
-exec su grafana -c /usr/sbin/grafana-server     \
+exec /usr/sbin/grafana-server                   \
   --homepath=/usr/share/grafana                 \
   --config=/etc/grafana/grafana.ini             \
   cfg:default.log.mode="console"                \
