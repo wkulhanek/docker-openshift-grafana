@@ -2,18 +2,18 @@
 
 This repository builds a docker image for use with Red Hat OpenShift taking into account security considerations for running on OpenShift - e.g. not running under the `root` user.
 
-To build:
-
+. To build:
++
 [source,bash]
 ----
 docker build . -t wkulhanek/grafana:latest
 docker push wkulhanek/grafana:latest
 ----
-
++
 The repository includes an OpenShift Template to run Grafana with persistent storage.
 
-Do deploy:
-
+. To deploy:
++
 [source,bash]
 ----
 oc new-project grafana --display-name="Monitoring - Grafana Dashboards"
@@ -21,4 +21,22 @@ oc create -f grafana.yaml
 oc new-app grafana -p NAMESPACE=grafana
 ----
 
-Then all you need to do is configure the Data Source to a Prometheus container and import a Dashboard (e.g. from https://github.com/debianmaster/openshift-examples/blob/master/promethus/grafana-dashboard.json)
+. Configure a Grafana Data Source
+
+* Log into Grafana using the Route provided in the Template and using default account `admin` with password `admin` (maybe it would be a good idea to change the password after this...).
+* On the Home Dashboard click *Add data source*
+* Use the following values for the datasource *Config*:
+** Name: `DS-Prometheus`
+** Type: `Prometheus`
+** Url: Route to your prometheus *without* a trailing `/`. E.g. `http://prometheus-prometheus.apps.127.0.0.1.nip.io`
+** Access: direct
+* Click `Add`
+* Click `Save & Test`. You should see a message that the data source is working.
+
+. Configure a Grafana Dashboard
+
+* There is an example dashboard JSON file available in the repository (copied from https://github.com/debianmaster/openshift-examples/tree/master/promethus)
+* In Grafana select the Icon on the top left and then select `Dashboards / Import`.
+* Either copy/paste the contents of the JSON File (make sure to keep the correct formatting) or click the `Upload .json File` button selecting the .json file.
+* In the next dialog enter `OpenShift` as the name and select the previously created datasource `DS-Prometheus` for *Prometheus*.
+* Click *Import*
