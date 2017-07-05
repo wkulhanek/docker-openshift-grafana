@@ -9,14 +9,22 @@ metadata:
     iconClass: icon-cogs
     tags: "monitoring,grafana"
 parameters:
-- description: The namespace to instantiate Grafana under. Defaults to 'kube-system'.
-  name: NAMESPACE
+- name: NAMESPACE
+  displayName: Namespace
+  description: The namespace to instantiate Grafana under. Defaults to 'kube-system'.
   value: kube-system
-- description: The location of the grafana image
-  name: IMAGE_GRAFANA
+  required: true
+- name: IMAGE_GRAFANA
+  displayName: Grafana Image
+  description: The location of the grafana image
   value: wkulhanek/grafana:latest
+  required: true
+- name: VOLUME_CAPACITY
+  displayName: Volume Capacity
+  description: Volume space available for data, e.g. 512Mi, 2Gi.
+  value: 4Gi
+  required: true
 objects:
-
 - apiVersion: v1
   kind: Route
   metadata:
@@ -96,7 +104,7 @@ objects:
     - ReadWriteMany
     resources:
       requests:
-        storage: 4Gi
+        storage: "${VOLUME_CAPACITY}"
 
 - apiVersion: v1
   kind: PersistentVolumeClaim
@@ -108,7 +116,7 @@ objects:
     - ReadWriteMany
     resources:
       requests:
-        storage: 4Gi
+        storage: "${VOLUME_CAPACITY}"
 
 - apiVersion: v1
   kind: ConfigMap
