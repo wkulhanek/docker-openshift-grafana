@@ -35,7 +35,7 @@ oc new-app grafana -p NAMESPACE=grafana -p VOLUME_CAPACITY=4Gi
 
 . Configure a Grafana Dashboard
 
-* There is an example dashboard JSON file available in the repository (copied from https://github.com/debianmaster/openshift-examples/tree/master/promethus)
+* There is an example dashboard JSON file available in the repository (there are more at https://grafana.com/dashboards?search=kubernetes)
 * In Grafana select the Icon on the top left and then select `Dashboards / Import`.
 * Either copy/paste the contents of the JSON File (make sure to keep the correct formatting) or click the `Upload .json File` button selecting the .json file.
 * In the next dialog enter `OpenShift` as the name and select the previously created datasource `DS-Prometheus` for *Prometheus*.
