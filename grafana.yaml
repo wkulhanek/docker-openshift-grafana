@@ -12,7 +12,7 @@ parameters:
 - name: NAMESPACE
   displayName: Namespace
   description: The namespace to instantiate Grafana under. Defaults to 'kube-system'.
-  value: kube-system
+  value: prometheus
   required: true
 - name: IMAGE_GRAFANA
   displayName: Grafana Image
@@ -37,9 +37,6 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
-    annotations:
-      prometheus.io/scrape: "true"
-      prometheus.io/scheme: http
     labels:
       name: grafana
     name: grafana
@@ -75,6 +72,26 @@ objects:
         - name: grafana
           image: ${IMAGE_GRAFANA}
           imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /login
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 2
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /login
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 2
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
           volumeMounts:
           - mountPath: /etc/grafana
             name: grafana-etc-volume
