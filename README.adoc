@@ -2,6 +2,8 @@
 
 This repository builds a docker image for use with Red Hat OpenShift taking into account security considerations for running on OpenShift - e.g. not running under the `root` user.
 
+This container image supports installation of custom Grafana plugins (data sources, panels, apps) from https://grafana.com/plugins. To install during the build process download the plugin zip file and place it into root/var/lib/grafana-plugins before building the image.
+
 . To build:
 +
 [source,bash]
@@ -35,7 +37,8 @@ oc new-app grafana -p NAMESPACE=grafana -p VOLUME_CAPACITY=4Gi
 
 . Configure a Grafana Dashboard
 
-* There is an example dashboard JSON file available in the repository (there are more at https://grafana.com/dashboards?search=kubernetes)
+* There is an example dashboard JSON file `openshift-metrics-dashboard.json` available in the repository. This dashboard depends on metrics that are being collected by Prometheus as configured in https://github.com/wkulhanek/openshift-prometheus.
+** There are more example dashboards available at https://grafana.com/dashboards?search=kubernetes.
 * In Grafana select the Icon on the top left and then select `Dashboards / Import`.
 * Either copy/paste the contents of the JSON File (make sure to keep the correct formatting) or click the `Upload .json File` button selecting the .json file.
 * In the next dialog enter `OpenShift` as the name and select the previously created datasource `DS-Prometheus` for *Prometheus*.
