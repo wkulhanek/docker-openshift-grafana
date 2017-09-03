@@ -1,4 +1,5 @@
 #!/bin/bash
+shopt -s nullglob
 for zipfile in /var/lib/grafana-plugins/*.zip
 do
   unzip -d /var/lib/grafana-plugins ${zipfile}
