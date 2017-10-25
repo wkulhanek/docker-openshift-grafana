@@ -20,7 +20,7 @@ The repository includes an OpenShift Template to run Grafana with persistent sto
 ----
 oc new-project grafana --display-name="Monitoring - Grafana Dashboards"
 oc create -f grafana.yaml
-oc new-app grafana -p NAMESPACE=grafana -p VOLUME_CAPACITY=4Gi
+oc new-app grafana -p VOLUME_CAPACITY=4Gi
 ----
 
 . Configure a Grafana Data Source
@@ -30,8 +30,8 @@ oc new-app grafana -p NAMESPACE=grafana -p VOLUME_CAPACITY=4Gi
 * Use the following values for the datasource *Config*:
 ** Name: `DS-Prometheus`
 ** Type: `Prometheus`
-** Url: Route to your prometheus *without* a trailing `/`. E.g. `http://prometheus-prometheus.apps.127.0.0.1.nip.io`
-** Access: direct
+** Url: http://prometheus:9090 (if your Prometheus service is called `prometheus` and is in the same project)
+** Access: proxy
 * Click `Add`
 * Click `Save & Test`. You should see a message that the data source is working.
 

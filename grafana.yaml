@@ -9,11 +9,6 @@ metadata:
     iconClass: icon-cogs
     tags: "monitoring,grafana"
 parameters:
-- name: NAMESPACE
-  displayName: Namespace
-  description: The namespace to instantiate Grafana under. Defaults to 'kube-system'.
-  value: prometheus
-  required: true
 - name: IMAGE_GRAFANA
   displayName: Grafana Image
   description: The location of the grafana image
@@ -29,7 +24,6 @@ objects:
   kind: Route
   metadata:
     name: grafana
-    namespace: "${NAMESPACE}"
   spec:
     to:
       name: grafana
@@ -40,7 +34,6 @@ objects:
     labels:
       name: grafana
     name: grafana
-    namespace: "${NAMESPACE}"
   spec:
     ports:
     - name: grafana
@@ -50,22 +43,22 @@ objects:
     selector:
       app: grafana
 
-- apiVersion: extensions/v1beta1
-  kind: Deployment
+- apiVersion: v1
+  kind: DeploymentConfig
   metadata:
     labels:
       app: grafana
     name: grafana
-    namespace: "${NAMESPACE}"
   spec:
     replicas: 1
     selector:
-      matchLabels:
-        app: grafana
+      app: grafana
+      deploymentconfig: grafana
     template:
       metadata:
         labels:
           app: grafana
+          deploymentconfig: grafana
         name: grafana
       spec:
         containers:
@@ -116,7 +109,6 @@ objects:
   kind: PersistentVolumeClaim
   metadata:
     name: grafana-lib-pvc
-    namespace: "${NAMESPACE}"
   spec:
     accessModes:
     - ReadWriteMany
@@ -128,7 +120,6 @@ objects:
   kind: PersistentVolumeClaim
   metadata:
     name: grafana-log-pvc
-    namespace: "${NAMESPACE}"
   spec:
     accessModes:
     - ReadWriteMany
@@ -140,7 +131,6 @@ objects:
   kind: ConfigMap
   metadata:
     name: grafana
-    namespace: "${NAMESPACE}"
   data:
     grafana.ini: |
       ##################### Grafana Configuration Defaults #####################

@@ -7,7 +7,7 @@ LABEL name="Grafana" \
       io.k8s.description="Grafana Dashboard for use with Prometheus." \
       io.openshift.expose-services="3000" \
       io.openshift.tags="grafana" \
-      build-date="2017-09-25" \
+      build-date="2017-10-25" \
       version=$GRAFANA_VERSION \
       release="1"
 
@@ -23,13 +23,14 @@ RUN yum -y update && yum -y upgrade && \
     rm /tmp/grafana.rpm
 
 COPY ./root /
-RUN /usr/bin/unzip-plugins && \
-    /usr/bin/fix-permissions /var/lib/grafana && \
-    /usr/bin/fix-permissions /var/lib/grafana-plugins && \
-    /usr/bin/fix-permissions /var/log/grafana && \
+RUN /usr/bin/fix-permissions /var/log/grafana && \
     /usr/bin/fix-permissions /etc/grafana && \
     /usr/bin/fix-permissions /usr/share/grafana && \
     /usr/bin/fix-permissions /usr/sbin/grafana-server
+
+# Install a few additional plugins (remove if not needed)
+RUN /usr/sbin/grafana-cli plugins install alexanderzobnin-zabbix-app && \
+    /usr/sbin/grafana-cli plugins install hawkular-datasource
 
 VOLUME ["/var/lib/grafana", "/var/log/grafana", "/etc/grafana"]
 
