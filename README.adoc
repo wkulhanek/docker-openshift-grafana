@@ -2,8 +2,6 @@
 
 This repository builds a docker image for use with Red Hat OpenShift taking into account security considerations for running on OpenShift - e.g. not running under the `root` user.
 
-This container image supports installation of custom Grafana plugins (data sources, panels, apps) from https://grafana.com/plugins. To install during the build process download the plugin zip file and place it into root/var/lib/grafana-plugins before building the image.
-
 . To build:
 +
 [source,bash]
