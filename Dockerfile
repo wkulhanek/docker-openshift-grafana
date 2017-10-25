@@ -28,10 +28,6 @@ RUN /usr/bin/fix-permissions /var/log/grafana && \
     /usr/bin/fix-permissions /usr/share/grafana && \
     /usr/bin/fix-permissions /usr/sbin/grafana-server
 
-# Install a few additional plugins (remove if not needed)
-RUN /usr/sbin/grafana-cli plugins install alexanderzobnin-zabbix-app && \
-    /usr/sbin/grafana-cli plugins install hawkular-datasource
-
 VOLUME ["/var/lib/grafana", "/var/log/grafana", "/etc/grafana"]
 
 EXPOSE 3000
