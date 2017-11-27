@@ -2,7 +2,7 @@
 
 export GF_PATHS_DATA=/var/lib/grafana
 export GF_PATHS_LOGS=/var/log/grafana
-export GF_PATHS_PLUGINS=/var/lib/grafana-plugins
+export GF_PATHS_PLUGINS=/var/lib/grafana/plugins
 
 # Determine UID and GID under which the container is running
 export USER_ID=$(id -u)
