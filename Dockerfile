@@ -1,13 +1,14 @@
 FROM centos:7
 MAINTAINER WolfgangKulhanek@gmail.com
-ENV GRAFANA_VERSION=5.0.0-beta1
+#ENV GRAFANA_VERSION=5.0.0-beta1
+ENV GRAFANA_VERSION=4.6.3-1
 
 LABEL name="Grafana" \
       io.k8s.display-name="Grafana" \
       io.k8s.description="Grafana Dashboard for use with Prometheus." \
       io.openshift.expose-services="3000" \
       io.openshift.tags="grafana" \
-      build-date="2018-02-05" \
+      build-date="2017-12-20" \
       version=$GRAFANA_VERSION \
       release="1"
 
