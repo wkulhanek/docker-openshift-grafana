@@ -1,6 +1,6 @@
 FROM centos:7
 MAINTAINER WolfgangKulhanek@gmail.com
-ENV GRAFANA_VERSION=5.0.0-beta1
+ENV GRAFANA_VERSION=5.0.0-beta3
 
 LABEL name="Grafana" \
       io.k8s.display-name="Grafana" \
