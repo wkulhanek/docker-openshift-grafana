@@ -7,7 +7,7 @@ LABEL name="Grafana" \
       io.k8s.description="Grafana Dashboard for use with Prometheus." \
       io.openshift.expose-services="3000" \
       io.openshift.tags="grafana" \
-      build-date="2018-03-01" \
+      build-date="2018-03-02" \
       version=$GRAFANA_VERSION \
       release="1"
 
