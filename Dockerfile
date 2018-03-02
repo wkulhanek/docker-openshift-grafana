@@ -1,5 +1,5 @@
-FROM centos:7
-MAINTAINER WolfgangKulhanek@gmail.com
+FROM docker.io/centos:7
+LABEL maintainer="Wolfgang Kulhanek <WolfgangKulhanek@gmail.com>"
 ENV GRAFANA_VERSION=5.0.0
 
 LABEL name="Grafana" \
