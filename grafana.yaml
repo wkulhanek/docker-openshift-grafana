@@ -12,7 +12,7 @@ parameters:
 - name: IMAGE_GRAFANA
   displayName: Grafana Image
   description: The location of the grafana image
-  value: wkulhanek/grafana:latest
+  value: wkulhanek/grafana:4.6.3
   required: true
 - name: VOLUME_CAPACITY
   displayName: Volume Capacity
