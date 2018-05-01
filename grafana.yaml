@@ -64,14 +64,14 @@ objects:
         containers:
         - name: grafana
           image: ${IMAGE_GRAFANA}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           livenessProbe:
             failureThreshold: 3
             httpGet:
               path: /login
               port: 3000
               scheme: HTTP
-            initialDelaySeconds: 2
+            initialDelaySeconds: 30
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
@@ -81,23 +81,29 @@ objects:
               path: /login
               port: 3000
               scheme: HTTP
-            initialDelaySeconds: 2
+            initialDelaySeconds: 10
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
           volumeMounts:
           - mountPath: /etc/grafana
             name: grafana-etc-volume
+          - mountPath: /etc/grafana-provisioning
+            name: grafana-provisioning-volume
           - mountPath: /var/lib/grafana
             name: grafana-lib-volume
           - mountPath: /var/log/grafana
             name: grafana-log-volume
         restartPolicy: Always
         volumes:
-        - configMap:
+        - name: grafana-etc-volume
+          configMap:
             defaultMode: 420
             name: grafana
-          name: grafana-etc-volume
+        - name: grafana-provisioning-volume
+          configMap:
+            name: grafana-provisioning
+            defaultMode: 420
         - name: grafana-lib-volume
           persistentVolumeClaim:
             claimName: grafana-lib-pvc
@@ -157,6 +163,9 @@ objects:
       # Directory where grafana will automatically scan and look for plugins
       #
       plugins = data/plugins
+
+      # Directory where grafana will look for provisioning files (Data Sources, Dashboards)
+      provisioning = provisioning
 
       #################################### Server ##############################
       [server]
@@ -597,3 +606,28 @@ objects:
       username =
       password =
       public_url =
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: grafana-provisioning
+  data:
+    prometheus.yml: |
+      # config file version
+      apiVersion: 1
+
+      # list of datasources to insert/update depending
+      # whats available in the database
+      datasources:
+        # <string, required> name of the datasource. Required
+      - name: DS-Prometheus
+        # <string, required> datasource type. Required
+        type: prometheus
+        # <string, required> access mode. direct or proxy. Required
+        access: proxy
+        # <int> org id. will default to orgId 1 if not specified
+        orgId: 1
+        # <string> url
+        url: http://prometheus:9000
+        version: 1
+        # <bool> allow users to edit datasources from the UI.
+        editable: true
