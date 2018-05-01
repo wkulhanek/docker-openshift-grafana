@@ -112,7 +112,7 @@ objects:
           configMap:
             name: grafana-dashboard-config
             defaultMode: 420
-        - name: grafana-dashboards-volume
+        - name: grafana-dashboards
           configMap:
             name: grafana-dashboards
             defaultMode: 420
@@ -639,8 +639,10 @@ objects:
         # <int> org id. will default to orgId 1 if not specified
         orgId: 1
         # <string> url
-        url: http://prometheus:9000
+        url: http://prometheus:9090
         version: 1
+        # <bool> mark as default datasource. Max one per org
+        isDefault: true
         # <bool> allow users to edit datasources from the UI.
         editable: true
 - apiVersion: v1
