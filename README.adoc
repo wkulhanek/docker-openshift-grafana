@@ -17,27 +17,19 @@ The repository includes an OpenShift Template to run Grafana with persistent sto
 [source,bash]
 ----
 oc new-project grafana --display-name="Monitoring - Grafana Dashboards"
-oc create -f grafana.yaml
-oc new-app grafana -p VOLUME_CAPACITY=4Gi
+oc new-app -f grafana -p VOLUME_CAPACITY=4Gi
 ----
 
-. Configure a Grafana Data Source
-
 * Log into Grafana using the Route provided in the Template and using default account `admin` with password `admin` (maybe it would be a good idea to change the password after this...).
-* On the Home Dashboard click *Add data source*
-* Use the following values for the datasource *Config*:
-** Name: `DS-Prometheus`
-** Type: `Prometheus`
-** Url: http://prometheus:9090 (if your Prometheus service is called `prometheus` and is in the same project)
-** Access: proxy
-* Click `Add`
-* Click `Save & Test`. You should see a message that the data source is working.
 
-. Configure a Grafana Dashboard
+. Grafana Data Source
 
-* There is an example dashboard JSON file `openshift-metrics-dashboard.json` available in the repository. This dashboard depends on metrics that are being collected by Prometheus as configured in https://github.com/wkulhanek/openshift-prometheus.
-** There are more example dashboards available at https://grafana.com/dashboards?search=kubernetes.
-* In Grafana select the Icon on the top left and then select `Dashboards / Import`.
-* Either copy/paste the contents of the JSON File (make sure to keep the correct formatting) or click the `Upload .json File` button selecting the .json file.
-* In the next dialog enter `OpenShift` as the name and select the previously created datasource `DS-Prometheus` for *Prometheus*.
-* Click *Import*
+* The Grafana template automatically provisions a Prometheus data source `DS-Prometheus` which connects to `http://prometheus:9090` via proxy connection.
+* This works if there is a Prometheus (called `prometheus`) in the same project as Grafana. If this is not the case it is necessary to edit the datasource to point to another location.
+
+. Grafana Dashboard
+
+* The Grafana template automatically provisions a rudimentary OpenShift metrics dashboard. This dashboard is by no means comprehensive but could be used as a starting point for further customization.
+* The configured dashboard depends on metrics that are being collected by Prometheus as configured in https://github.com/wkulhanek/openshift-prometheus.
+
+* There are more example dashboards available at https://grafana.com/dashboards?search=kubernetes.
