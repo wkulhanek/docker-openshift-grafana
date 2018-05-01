@@ -670,7 +670,7 @@ objects:
       {
         "__inputs": [
           {
-            "name": "DS_DS-PROMETHEUS",
+            "name": "DS-Prometheus",
             "label": "DS-Prometheus",
             "description": "",
             "type": "datasource",
@@ -725,7 +725,7 @@ objects:
                 "bars": true,
                 "dashLength": 10,
                 "dashes": false,
-                "datasource": "${DS_DS-PROMETHEUS}",
+                "datasource": "DS-Prometheus",
                 "description": "Percentage of usage of the Docker Volume Group on each host.",
                 "fill": 1,
                 "id": 4,
@@ -815,7 +815,7 @@ objects:
                 "bars": true,
                 "dashLength": 10,
                 "dashes": false,
-                "datasource": "${DS_DS-PROMETHEUS}",
+                "datasource": "DS-Prometheus",
                 "fill": 1,
                 "id": 5,
                 "legend": {
@@ -907,7 +907,7 @@ objects:
                   "rgba(237, 129, 40, 0.89)",
                   "rgba(245, 54, 54, 0.9)"
                 ],
-                "datasource": "${DS_DS-PROMETHEUS}",
+                "datasource": "DS-Prometheus",
                 "format": "percentunit",
                 "gauge": {
                   "maxValue": 100,
@@ -991,7 +991,7 @@ objects:
                 "bars": false,
                 "dashLength": 10,
                 "dashes": false,
-                "datasource": "${DS_DS-PROMETHEUS}",
+                "datasource": "DS-Prometheus",
                 "fill": 0,
                 "id": 8,
                 "legend": {
@@ -1070,7 +1070,7 @@ objects:
                 "bars": false,
                 "dashLength": 10,
                 "dashes": false,
-                "datasource": "${DS_DS-PROMETHEUS}",
+                "datasource": "DS-Prometheus",
                 "fill": 0,
                 "id": 10,
                 "legend": {
@@ -1168,7 +1168,7 @@ objects:
                 "bars": false,
                 "dashLength": 10,
                 "dashes": false,
-                "datasource": "${DS_DS-PROMETHEUS}",
+                "datasource": "DS-Prometheus",
                 "fill": 0,
                 "id": 11,
                 "legend": {
@@ -1246,7 +1246,7 @@ objects:
                 "bars": false,
                 "dashLength": 10,
                 "dashes": false,
-                "datasource": "${DS_DS-PROMETHEUS}",
+                "datasource": "DS-Prometheus",
                 "fill": 0,
                 "id": 13,
                 "legend": {
@@ -1336,7 +1336,7 @@ objects:
                 "bars": false,
                 "dashLength": 10,
                 "dashes": false,
-                "datasource": "${DS_DS-PROMETHEUS}",
+                "datasource": "DS-Prometheus",
                 "fill": 1,
                 "id": 14,
                 "legend": {
@@ -1424,7 +1424,7 @@ objects:
                 "bars": false,
                 "dashLength": 10,
                 "dashes": false,
-                "datasource": "${DS_DS-PROMETHEUS}",
+                "datasource": "DS-Prometheus",
                 "fill": 1,
                 "id": 15,
                 "legend": {
@@ -1512,7 +1512,7 @@ objects:
                   "rgba(237, 129, 40, 0.89)",
                   "rgba(245, 54, 54, 0.9)"
                 ],
-                "datasource": "${DS_DS-PROMETHEUS}",
+                "datasource": "DS-Prometheus",
                 "decimals": null,
                 "format": "percent",
                 "gauge": {
