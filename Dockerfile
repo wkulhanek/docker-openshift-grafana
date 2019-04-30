@@ -17,7 +17,7 @@ ENV USERNAME=grafana
 RUN yum -y update && yum -y upgrade && \
     yum -y install epel-release && \
     yum -y install git unzip nss_wrapper && \
-    curl -L -o /tmp/grafana.rpm https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-$GRAFANA_VERSION-1.x86_64.rpm && \
+    curl -L -o /tmp/grafana.rpm https://dl.grafana.com/oss/release/grafana-$GRAFANA_VERSION-1.x86_64.rpm && \
     yum -y localinstall /tmp/grafana.rpm && \
     yum -y clean all && \
     rm -rf /var/cache/yum \
