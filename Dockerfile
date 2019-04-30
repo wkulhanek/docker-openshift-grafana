@@ -1,13 +1,13 @@
 FROM docker.io/centos:7
 LABEL maintainer="Wolfgang Kulhanek <WolfgangKulhanek@gmail.com>"
-ARG GRAFANA_VERSION=5.4.3
+ARG GRAFANA_VERSION=5.4.4
 
 LABEL name="Grafana" \
       io.k8s.display-name="Grafana" \
       io.k8s.description="Grafana Dashboard for use with Prometheus." \
       io.openshift.expose-services="3000" \
       io.openshift.tags="grafana" \
-      build-date="2019-02-08" \
+      build-date="2019-04-30" \
       version=$GRAFANA_VERSION \
       release="1"
 
